@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:linode_flutter/controllers/firebase_auth.dart';
 import 'package:linode_flutter/register.dart';
 
 class UserLogin extends StatefulWidget {
@@ -17,6 +18,9 @@ class _UserLoginState extends State<UserLogin> {
   Widget build(BuildContext context) {
     const backgroundColor = const Color(0xFFBE1D1FB);
     const buttonColor = const Color(0xFFB392E4F);
+
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -38,7 +42,7 @@ class _UserLoginState extends State<UserLogin> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
-                // controller: emailController,
+                controller: emailController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
@@ -49,7 +53,7 @@ class _UserLoginState extends State<UserLogin> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
-                // controller: emailController,
+                controller: passwordController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
@@ -63,7 +67,10 @@ class _UserLoginState extends State<UserLogin> {
                 style: ElevatedButton.styleFrom(
                   primary: buttonColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  loginUsingFirebase(
+                      emailController.text, passwordController.text);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
