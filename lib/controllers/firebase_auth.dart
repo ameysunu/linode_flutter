@@ -32,3 +32,7 @@ registerUsers(email, password) async {
     isSuccess = false;
   }
 }
+
+logoutFirebase() async {
+  await FirebaseAuth.instance.signOut();
+}
