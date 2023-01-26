@@ -26,3 +26,16 @@ samples, guidance on mobile development, and a full API reference.
 https://efac-2a01-7e00-00-f03c-93ff-fe62-8edd.eu.ngrok.io/detect_emotions?url_address=https://s.yimg.com/ny/api/res/1.2/sOY7KfVwt6fGSxZyPnFRvA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU4NjtjZj13ZWJw/https://media.zenfs.com/en-US/homerun/uproxx_movies_881/f2218a32e3820c6d1b4a4502cba1e377
 
 ```
+
+## Uploading image to Linode Bucket
+
+* Replace the access keys, and regions in `bucket-upload.py`
+* Run the python file, and use `ngrok` to port forward from the Linode Instance to do a post method to upload files.
+* Use the image parameter to add the desired image to upload.
+
+Example: 
+
+```
+http -f POST http://localhost:5000/upload image@path/to/image.jpg
+
+```
