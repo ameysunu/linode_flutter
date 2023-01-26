@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'controllers/firebase_auth.dart';
 import 'controllers/linodedb.dart';
 
 class RegisterUser extends StatefulWidget {
@@ -18,6 +19,10 @@ class _RegisterUserState extends State<RegisterUser> {
   Widget build(BuildContext context) {
     const backgroundColor = const Color(0xFFBE1D1FB);
     const buttonColor = const Color(0xFFB392E4F);
+
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final confirmedController = TextEditingController();
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -44,7 +49,7 @@ class _RegisterUserState extends State<RegisterUser> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
-                // controller: emailController,
+                controller: emailController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
@@ -55,7 +60,7 @@ class _RegisterUserState extends State<RegisterUser> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
-                // controller: emailController,
+                controller: passwordController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
@@ -66,7 +71,7 @@ class _RegisterUserState extends State<RegisterUser> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
-                // controller: emailController,
+                controller: confirmedController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Confirm Password',
@@ -80,7 +85,30 @@ class _RegisterUserState extends State<RegisterUser> {
                 style: ElevatedButton.styleFrom(
                   primary: buttonColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  if (confirmedController.text == passwordController.text) {
+                    registerUsers(
+                        emailController.text, passwordController.text);
+                    if (isSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text(
+                              "Successful! Go back to Login, and sign in with your new account"),
+                          duration: Duration(seconds: 5)));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                              "An error has occurred while creating an account"),
+                          duration: Duration(seconds: 5)));
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text("Passwords do not match"),
+                        duration: Duration(seconds: 5)));
+                  }
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linode_flutter/controllers/firebase_auth.dart';
+import 'package:linode_flutter/home.dart';
 import 'package:linode_flutter/register.dart';
 
 class UserLogin extends StatefulWidget {
@@ -53,6 +54,7 @@ class _UserLoginState extends State<UserLogin> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
+                obscureText: true,
                 controller: passwordController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -70,6 +72,18 @@ class _UserLoginState extends State<UserLogin> {
                 onPressed: () {
                   loginUsingFirebase(
                       emailController.text, passwordController.text);
+                  if (isSuccess) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.red,
+                        content:
+                            Text("An error has occurred while logging you in"),
+                        duration: Duration(seconds: 5)));
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
