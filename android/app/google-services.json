@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "834637149071",
+    "project_id": "myhacks-a8339",
+    "storage_bucket": "myhacks-a8339.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834637149071:android:14d0dab234609dd56f11fa",
+        "android_client_info": {
+          "package_name": "com.example.linode_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834637149071-0fnb8pf4r3sa2mrt12ru866pq57lop24.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7AvC617ufbeclhhLSlUDzo9vCm4zo50Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834637149071-0fnb8pf4r3sa2mrt12ru866pq57lop24.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "834637149071-kcssqad8h4u0qrrpb1q6t00h1n50fn9v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "me.amey.google-maps-platform"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
