@@ -38,6 +38,8 @@ dependencies:
   firebase_core: ^2.4.1
   google_fonts: ^3.0.1
   flutter_svg:
+  sqflite:
+  mysql_client: ^0.0.27
 
 dev_dependencies:
   flutter_test:

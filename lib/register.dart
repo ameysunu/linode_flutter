@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'controllers/linodedb.dart';
+
 class RegisterUser extends StatefulWidget {
   const RegisterUser({super.key});
 
