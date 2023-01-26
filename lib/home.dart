@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linode_flutter/controllers/firebase_auth.dart';
+import 'package:linode_flutter/controllers/spotify.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     const backgroundColor = const Color(0xFFB392E4F);
+
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -97,6 +101,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: () async {
+                      getValue();
+                    },
+                    child: Text("data"))
               ],
             ),
           ),
