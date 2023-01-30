@@ -33,6 +33,6 @@ getValue() async {
     final jsonData = jsonDecode(response.body);
     print(jsonData);
   } else {
-    // handle the error case
+    print("Error");
   }
 }
