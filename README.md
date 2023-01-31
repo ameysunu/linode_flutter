@@ -39,3 +39,11 @@ Example:
 http -f POST http://localhost:5000/upload image@path/to/image.jpg
 
 ```
+
+## Getting Spotify Token
+
+* Clone the Github Spotify sample app repository at https://github.com/spotify/web-api-examples/tree/master/authentication/authorization_code
+
+* Open `app.js` and add the needed tokens, redirect url: `/callback`.
+
+* Run node `app.js` and login to retrieve the App Token
