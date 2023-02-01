@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linode_flutter/controllers/firebase_auth.dart';
 import 'package:linode_flutter/controllers/spotify.dart';
+import 'package:linode_flutter/mood.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -58,29 +60,55 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Analyze my mood',
-                                style: GoogleFonts.manrope(
-                                    textStyle: TextStyle(fontSize: 20)),
-                              ),
-                              const Text("See if I'm groovy today!")
-                            ],
-                          ),
-                          Icon(Icons.music_note)
-                        ],
+                    child: InkWell(
+                      onTap: () async {
+                        WidgetsFlutterBinding.ensureInitialized();
+                        final cameras = await availableCameras();
+
+                        if (cameras.isNotEmpty) {
+                          final frontCamera =
+                              cameras.firstWhere((CameraDescription camera) {
+                            return camera.lensDirection ==
+                                CameraLensDirection.front;
+                          });
+
+                          // Use the firstCamera
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Mood(camera: frontCamera)),
+                          );
+                        } else {
+                          print("error");
+                        }
+
+                        // ignore: use_build_context_synchronously
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Analyze my mood',
+                                  style: GoogleFonts.manrope(
+                                      textStyle: TextStyle(fontSize: 20)),
+                                ),
+                                const Text("See if I'm groovy today!")
+                              ],
+                            ),
+                            Icon(Icons.music_note)
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -318,16 +346,14 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         children: [
                           Spacer(),
-                          Text(
-                            "Want to vibe on something else? Hit refresh",
-                            style: GoogleFonts.manrope(
-                                textStyle: TextStyle(
-                                    color: Colors.white, fontSize: 18)),
-                          ),
-                          Icon(
-                            Icons.refresh,
-                            size: 30,
-                            color: Colors.white,
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: Text(
+                              "Want to vibe on something else? Refresh here",
+                              style: GoogleFonts.manrope(
+                                  textStyle: TextStyle(
+                                      color: Colors.white, fontSize: 18)),
+                            ),
                           ),
                           Spacer()
                         ],
