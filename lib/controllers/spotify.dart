@@ -3,36 +3,21 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:linode_flutter/controllers/secrets.dart';
 
-final String url = 'https://api.spotify.com/v1/tracks';
-final String accept = 'application/json';
-final String contentType = 'application/json';
-final String token = SPOTIFY_TOKEN;
-final Map<String, String> headers = {
-  'Accept': accept,
-  'Content-Type': contentType,
-  'Authorization': 'Bearer $token',
-};
+Future<Map<String, dynamic>> getValue() async {
+  var url =
+      'https://europe-west1-randommusicgenerator-34646.cloudfunctions.net/app/getRandomTrack?market=US&decade=all&tag_new=false&exclude_singles=false';
+  final response = await http.get(Uri.parse(url));
 
-final Map<String, String> parameters = {
-  'market': 'US',
-  'ids': '$SPOTIFY_ID_1, $SPOTIFY_ID_2, $SPOTIFY_ID_3',
-};
-
-Future<http.Response> getTracks() async {
-  final String host = 'api.spotify.com';
-  final String path = '/v1/tracks';
-  final Uri uri =
-      Uri(scheme: 'https', host: host, path: path, queryParameters: parameters);
-  final response = await http.get(uri, headers: headers);
-  return response;
+  if (response.statusCode == 200) {
+    print(json.decode(response.body));
+    var responseBody = json.decode(response.body);
+    return responseBody;
+  } else {
+    throw Exception('e');
+  }
 }
 
-getValue() async {
-  final response = await getTracks();
-  if (response.statusCode == 200) {
-    final jsonData = jsonDecode(response.body);
-    print(jsonData);
-  } else {
-    print("Error");
-  }
+String getScanCode(Map<String, dynamic> responseBody) {
+  var jsonURI = responseBody['uri'];
+  return 'https://scannables.scdn.co/uri/plain/jpeg/ffffff/black/640/$jsonURI';
 }
