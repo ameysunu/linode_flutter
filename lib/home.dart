@@ -129,71 +129,72 @@ class _HomePageState extends State<HomePage> {
                         textStyle:
                             TextStyle(color: Colors.white, fontSize: 18)),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(
-                  //       top: 10.0, left: 30.0, right: 30.0),
-                  //   child: FutureBuilder(
-                  //     future: getImageURL(),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         return Image.network(
-                  //           snapshot.data as String,
-                  //           fit: BoxFit.fill,
-                  //           loadingBuilder: (BuildContext context, Widget child,
-                  //               ImageChunkEvent? loadingProgress) {
-                  //             if (loadingProgress == null) return child;
-                  //             return Center(
-                  //               child: CircularProgressIndicator(
-                  //                 value: loadingProgress.expectedTotalBytes !=
-                  //                         null
-                  //                     ? loadingProgress.cumulativeBytesLoaded /
-                  //                         loadingProgress.expectedTotalBytes!
-                  //                     : null,
-                  //               ),
-                  //             );
-                  //           },
-                  //         );
-                  //       } else if (snapshot.hasError) {
-                  //         return Text("Error loading image");
-                  //       } else {
-                  //         return CircularProgressIndicator();
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(
-                  //       bottom: 10.0, left: 30.0, right: 30.0),
-                  //   child: FutureBuilder(
-                  //     future: getScanCode(),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         return Image.network(
-                  //           snapshot.data as String,
-                  //           //width: MediaQuery.of(context).size.width * 0.5,
-                  //           fit: BoxFit.fill,
-                  //           loadingBuilder: (BuildContext context, Widget child,
-                  //               ImageChunkEvent? loadingProgress) {
-                  //             if (loadingProgress == null) return child;
-                  //             return Center(
-                  //               child: CircularProgressIndicator(
-                  //                 value: loadingProgress.expectedTotalBytes !=
-                  //                         null
-                  //                     ? loadingProgress.cumulativeBytesLoaded /
-                  //                         loadingProgress.expectedTotalBytes!
-                  //                     : null,
-                  //               ),
-                  //             );
-                  //           },
-                  //         );
-                  //       } else if (snapshot.hasError) {
-                  //         return Text("Error loading image");
-                  //       } else {
-                  //         return CircularProgressIndicator();
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: FutureBuilder(
+                      future: getImageURL(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Image.network(
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            snapshot.data as String,
+                            fit: BoxFit.fill,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("Error loading image");
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: FutureBuilder(
+                      future: getScanCode(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Image.network(
+                            snapshot.data as String,
+                            width: MediaQuery.of(context).size.width * 0.432,
+                            fit: BoxFit.fill,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("Error loading image");
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
