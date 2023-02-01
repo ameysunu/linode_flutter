@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linode_flutter/controllers/firebase_auth.dart';
 import 'package:linode_flutter/controllers/spotify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,10 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Future<Map<String, dynamic>> responseFuture;
+
   void initState() {
-    getImageURL();
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getValue());
+    responseFuture = getValue();
+    // WidgetsBinding.instance.addPostFrameCallback((_) => getValue());
   }
 
   @override
@@ -109,13 +112,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  // ElevatedButton(
-                  //     onPressed: () async {
-                  //       getValue();
-                  //     },
-                  //     child: Text("data"))
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
+                    padding: const EdgeInsets.only(top: 30.0),
                     child: Text(
                       "Daily vibes ✨",
                       style: GoogleFonts.manrope(
@@ -129,72 +127,213 @@ class _HomePageState extends State<HomePage> {
                         textStyle:
                             TextStyle(color: Colors.white, fontSize: 18)),
                   ),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 35.0),
+                            child: FutureBuilder(
+                              future: responseFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Image.network(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.2,
+                                    snapshot.data!['image'] as String,
+                                    fit: BoxFit.fill,
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text("Error loading image");
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: FutureBuilder(
+                              future: responseFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  Map<String, dynamic>? response =
+                                      snapshot.data;
+                                  return Image.network(
+                                    getScanCode(response!),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.432,
+                                    fit: BoxFit.fill,
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text("Error loading image");
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: FutureBuilder(
+                              future: responseFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Text(
+                                        snapshot.data!['name'] as String,
+                                        style: GoogleFonts.manrope(
+                                            textStyle:
+                                                TextStyle(color: Colors.white),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ));
+                                } else if (snapshot.hasError) {
+                                  return Text("Error loading image");
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: FutureBuilder(
+                              future: responseFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Text(
+                                        snapshot.data!['artists'][0]['name']
+                                            as String,
+                                        style: GoogleFonts.manrope(
+                                          textStyle:
+                                              TextStyle(color: Colors.white),
+                                          fontSize: 16,
+                                        ),
+                                      ));
+                                } else if (snapshot.hasError) {
+                                  return Text("Error loading image");
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, right: 10.0, top: 10),
+                            child: FutureBuilder(
+                              future: responseFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          var url = snapshot.data!['link'];
+                                          final uri = Uri.parse(url);
+                                          if (await canLaunchUrl(uri)) {
+                                            await launchUrl(uri);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Text(
+                                          'Play on Spotify',
+                                          style: GoogleFonts.manrope(
+                                            textStyle:
+                                                TextStyle(color: Colors.white),
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ));
+                                } else if (snapshot.hasError) {
+                                  return Text("Error loading image");
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: FutureBuilder(
-                      future: getImageURL(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Image.network(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            snapshot.data as String,
-                            fit: BoxFit.fill,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error loading image");
-                        } else {
-                          return CircularProgressIndicator();
-                        }
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          responseFuture = getValue();
+                        });
                       },
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          Text(
+                            "Want to vibe on something else? Hit refresh",
+                            style: GoogleFonts.manrope(
+                                textStyle: TextStyle(
+                                    color: Colors.white, fontSize: 18)),
+                          ),
+                          Icon(
+                            Icons.refresh,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          Spacer()
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: FutureBuilder(
-                      future: getScanCode(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Image.network(
-                            snapshot.data as String,
-                            width: MediaQuery.of(context).size.width * 0.432,
-                            fit: BoxFit.fill,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text("Error loading image");
-                        } else {
-                          return CircularProgressIndicator();
-                        }
-                      },
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),
