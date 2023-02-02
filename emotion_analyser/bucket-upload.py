@@ -1,6 +1,8 @@
 from flask import Flask, request
 import boto3
 import json
+import random
+import requests
 
 app = Flask(__name__)
 
@@ -16,12 +18,19 @@ client = boto3.client(
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['image']
+    filename = random.randint(1000, 1000000)
     response = client.put_object(
-        Bucket='BUCKET_NAME',
-        Key='random.jpg',
-        Body=file.read()
+        Bucket='dev-hackathon',
+        Key=f'{filename}.jpg',
+        Body=file.read(),
+        ACL='public-read'
     )
-    return json.dumps(response)
+    print('Calling emotion analysis API')
+
+    url = f'http://localhost:8000/detect_emotions?url_address=https://dev-hackathon.eu-central-1.linodeobjects.com/{filename}.jpg'
+    new_response = requests.get(url)
+    return json.dumps(new_response.text)
+
 
 if __name__ == '__main__':
     app.run()
