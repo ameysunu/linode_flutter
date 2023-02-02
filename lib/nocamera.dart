@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:linode_flutter/mood.dart';
+import 'package:rive/rive.dart';
 
 class NoCamera extends StatefulWidget {
   const NoCamera({super.key});
@@ -42,6 +43,9 @@ class _NoCameraState extends State<NoCamera> {
                 style: GoogleFonts.manrope(
                     textStyle: TextStyle(color: textColor, fontSize: 15)),
               ),
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: RiveAnimation.asset('assets/camera.riv')),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: ElevatedButton(
@@ -62,14 +66,6 @@ class _NoCameraState extends State<NoCamera> {
                   ),
                 ),
               ),
-              // imageFile == null
-              //     ? Container()
-              //     : Container(
-              //         child: Image.file(
-              //           imageFile,
-              //           fit: BoxFit.cover,
-              //         ),
-              //       )
             ],
           ),
         ),
