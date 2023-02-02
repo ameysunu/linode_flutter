@@ -51,6 +51,12 @@
 	<string>We need your camera</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need your microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+  	<string>Upload images for screen background</string>
+  	<key>NSCameraUsageDescription</key>
+  	<string>Upload image from camera for screen background</string>
+  	<key>NSMicrophoneUsageDescription</key>
+  	<string>Post videos to profile</string>
 
 </dict>
 </plist>

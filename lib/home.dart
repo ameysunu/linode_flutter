@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:linode_flutter/controllers/firebase_auth.dart';
 import 'package:linode_flutter/controllers/spotify.dart';
 import 'package:linode_flutter/mood.dart';
+import 'package:linode_flutter/nocamera.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -80,7 +81,11 @@ class _HomePageState extends State<HomePage> {
                                     Mood(camera: frontCamera)),
                           );
                         } else {
-                          print("error");
+                          print("No Camera");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => NoCamera()),
+                          );
                         }
 
                         // ignore: use_build_context_synchronously
