@@ -46,6 +46,7 @@ dependencies:
   path_provider:
   path:
   image_picker: 
+  rive: ^0.10.1
 
 dev_dependencies:
   flutter_test:

@@ -40,6 +40,19 @@ http -f POST http://localhost:5000/upload image@path/to/image.jpg
 
 ```
 
+## Starting the Analysis API
+
+* Run the `linodeupload` file, and port forward using `ngrok`
+* Start the `api-emotion` on the server `localhost`
+* Send the `image` parameter, ex: 
+
+```
+curl -X POST -F "image=@//Users/ameysunu/Downloads/5d9f3f5183486904582ee506.png" https://abfe-2a01-7e00-00-f03c-93ff-fe62-8edd.eu.ngrok.io/upload
+
+```
+
+
+
 ## Getting Spotify Token
 
 * Clone the Github Spotify sample app repository at https://github.com/spotify/web-api-examples/tree/master/authentication/authorization_code

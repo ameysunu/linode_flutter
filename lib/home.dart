@@ -29,21 +29,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const backgroundColor = const Color(0xFFB392E4F);
+    const bckColor = const Color(0xFFB392E4F);
+    const textColor = Colors.white;
 
     return Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: textColor,
         appBar: AppBar(
           actions: [
             IconButton(
                 onPressed: logoutFirebase,
                 icon: Icon(
                   Icons.logout,
-                  color: Colors.white,
+                  color: bckColor,
                 ))
           ],
           elevation: 0,
-          backgroundColor: backgroundColor,
+          backgroundColor: textColor,
           automaticallyImplyLeading: false,
         ),
         body: SafeArea(
@@ -56,8 +57,7 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     "Welcome!",
                     style: GoogleFonts.manrope(
-                        textStyle:
-                            TextStyle(color: Colors.white, fontSize: 30)),
+                        textStyle: TextStyle(color: bckColor, fontSize: 30)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
+                          color: bckColor,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,12 +106,19 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   'Analyze my mood',
                                   style: GoogleFonts.manrope(
-                                      textStyle: TextStyle(fontSize: 20)),
+                                      textStyle: TextStyle(
+                                          fontSize: 20, color: Colors.white)),
                                 ),
-                                const Text("See if I'm groovy today!")
+                                Text("See if I'm groovy today!",
+                                    style: GoogleFonts.manrope(
+                                        textStyle:
+                                            TextStyle(color: Colors.white)))
                               ],
                             ),
-                            Icon(Icons.music_note)
+                            Icon(
+                              Icons.music_note,
+                              color: Colors.white,
+                            )
                           ],
                         ),
                       ),
@@ -124,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: Colors.white,
+                        color: bckColor,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,12 +142,20 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 'Things I did',
                                 style: GoogleFonts.manrope(
-                                    textStyle: TextStyle(fontSize: 20)),
+                                    textStyle: TextStyle(
+                                        fontSize: 20, color: Colors.white)),
                               ),
-                              const Text("All my previous mood swings!")
+                              Text(
+                                "All my previous mood swings!",
+                                style: GoogleFonts.manrope(
+                                    textStyle: TextStyle(color: Colors.white)),
+                              )
                             ],
                           ),
-                          Icon(Icons.security)
+                          Icon(
+                            Icons.security,
+                            color: Colors.white,
+                          )
                         ],
                       ),
                     ),
@@ -150,15 +165,13 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       "Daily vibes ✨",
                       style: GoogleFonts.manrope(
-                          textStyle:
-                              TextStyle(color: Colors.white, fontSize: 30)),
+                          textStyle: TextStyle(color: bckColor, fontSize: 30)),
                     ),
                   ),
                   Text(
                     "A random song for you everyday!",
                     style: GoogleFonts.manrope(
-                        textStyle:
-                            TextStyle(color: Colors.white, fontSize: 18)),
+                        textStyle: TextStyle(color: bckColor, fontSize: 18)),
                   ),
                   Row(
                     children: [
@@ -181,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                                       if (loadingProgress == null) return child;
                                       return Center(
                                         child: CircularProgressIndicator(
-                                          color: Colors.white,
+                                          color: bckColor,
                                           value: loadingProgress
                                                       .expectedTotalBytes !=
                                                   null
@@ -221,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                                       if (loadingProgress == null) return child;
                                       return Center(
                                         child: CircularProgressIndicator(
-                                          color: Colors.white,
+                                          color: bckColor,
                                           value: loadingProgress
                                                       .expectedTotalBytes !=
                                                   null
@@ -260,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                                         snapshot.data!['name'] as String,
                                         style: GoogleFonts.manrope(
                                             textStyle:
-                                                TextStyle(color: Colors.white),
+                                                TextStyle(color: bckColor),
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ));
@@ -286,8 +299,7 @@ class _HomePageState extends State<HomePage> {
                                         snapshot.data!['artists'][0]['name']
                                             as String,
                                         style: GoogleFonts.manrope(
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
+                                          textStyle: TextStyle(color: bckColor),
                                           fontSize: 16,
                                         ),
                                       ));
@@ -323,7 +335,7 @@ class _HomePageState extends State<HomePage> {
                                           'Play on Spotify',
                                           style: GoogleFonts.manrope(
                                             textStyle:
-                                                TextStyle(color: Colors.white),
+                                                TextStyle(color: bckColor),
                                             fontSize: 12,
                                           ),
                                         ),
@@ -356,8 +368,8 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               "Want to vibe on something else? Refresh here",
                               style: GoogleFonts.manrope(
-                                  textStyle: TextStyle(
-                                      color: Colors.white, fontSize: 18)),
+                                  textStyle:
+                                      TextStyle(color: bckColor, fontSize: 18)),
                             ),
                           ),
                           Spacer()
