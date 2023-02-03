@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:linode_flutter/loading.dart';
 
 import 'controllers/linodedb.dart';
 
@@ -179,7 +180,14 @@ class _DisplayImageState extends State<DisplayImage> {
               ),
               onPressed: () {
                 // print(widget.imagePath);
-                uploadImage(widget.imagePath);
+                //uploadImage(widget.imagePath);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoadingScreen(
+                            response: uploadImage(widget.imagePath),
+                          )),
+                );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
