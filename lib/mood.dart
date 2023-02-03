@@ -6,6 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'controllers/linodedb.dart';
+
 class Mood extends StatefulWidget {
   const Mood({super.key, required this.camera});
 
@@ -176,7 +178,8 @@ class _DisplayImageState extends State<DisplayImage> {
                 primary: textColor,
               ),
               onPressed: () {
-                print(widget.imagePath);
+                // print(widget.imagePath);
+                uploadImage(widget.imagePath);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
