@@ -35,25 +35,42 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   Widget build(BuildContext context) {
     const textColor = const Color(0xFFB392E4F);
-    bool _showAppBar = false;
 
     return Scaffold(
       body: FutureBuilder(
         future: widget.response,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              child: Center(
-                child: Text(snapshot.data.toString(),
-                    style: GoogleFonts.manrope(
-                      textStyle: TextStyle(color: textColor, fontSize: 20),
-                    )),
-              ),
-            );
+            return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  leading: BackButton(
+                    color: textColor,
+                  ),
+                ),
+                // body: Container(
+                //   child: Center(
+                //     child: Text(snapshot.data.toString(),
+                //         style: GoogleFonts.manrope(
+                //           textStyle: TextStyle(color: textColor, fontSize: 20),
+                //         )),
+                //   ),
+                // ),
+                body: ResultWidget(data: snapshot.data));
           } else if (snapshot.hasError) {
-            return Container(
-              child: Center(
-                child: Text("An error has occurred"),
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                leading: BackButton(
+                  color: textColor,
+                ),
+              ),
+              body: Container(
+                child: Center(
+                  child: Text("An error has occurred"),
+                ),
               ),
             );
           }
@@ -78,6 +95,47 @@ class _LoadingScreenState extends State<LoadingScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class ResultWidget extends StatefulWidget {
+  const ResultWidget({super.key, required this.data});
+
+  final String data;
+
+  @override
+  State<ResultWidget> createState() => _ResultWidgetState();
+}
+
+class _ResultWidgetState extends State<ResultWidget> {
+  @override
+  Widget build(BuildContext context) {
+    const textColor = const Color(0xFFB392E4F);
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Builder(builder: (context) {
+          if (widget.data == 'No face found, please try again.') {
+            return Container(
+              child: Center(
+                child: Text(widget.data,
+                    style: GoogleFonts.manrope(
+                      textStyle: TextStyle(color: textColor, fontSize: 20),
+                    )),
+              ),
+            );
+          }
+          return Column(
+            children: [
+              Text(widget.data,
+                  style: GoogleFonts.manrope(
+                    textStyle: TextStyle(color: textColor, fontSize: 20),
+                  ))
+            ],
+          );
+        }),
       ),
     );
   }

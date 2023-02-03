@@ -47,16 +47,22 @@ PODS:
     - Flutter
     - FlutterMacOS
   - PromisesObjC (2.1.1)
+  - rive_common (0.0.1):
+    - FlutterMacOS
   - sqflite (0.0.2):
     - FlutterMacOS
     - FMDB (>= 2.7.5)
+  - url_launcher_macos (0.0.1):
+    - FlutterMacOS
 
 DEPENDENCIES:
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
+  - rive_common (from `Flutter/ephemeral/.symlinks/plugins/rive_common/macos`)
   - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
+  - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
 SPEC REPOS:
   trunk:
@@ -78,8 +84,12 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
+  rive_common:
+    :path: Flutter/ephemeral/.symlinks/plugins/rive_common/macos
   sqflite:
     :path: Flutter/ephemeral/.symlinks/plugins/sqflite/macos
+  url_launcher_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
@@ -94,7 +104,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  rive_common: 643f5c20ccd60c53136ab5c970eccf0d17e010fe
   sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
+  url_launcher_macos: c04e4fa86382d4f94f6b38f14625708be3ae52e2
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
 
