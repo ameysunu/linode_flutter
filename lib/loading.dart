@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rive/rive.dart';
 
+import 'controllers/generator.dart';
+
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key, required this.response});
 
@@ -110,6 +112,15 @@ class ResultWidget extends StatefulWidget {
 }
 
 class _ResultWidgetState extends State<ResultWidget> {
+  var sentence;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sentence = generatorSentence(widget.data);
+  }
+
   @override
   Widget build(BuildContext context) {
     const textColor = const Color(0xFFB392E4F);
@@ -127,13 +138,28 @@ class _ResultWidgetState extends State<ResultWidget> {
               ),
             );
           }
-          return Column(
-            children: [
-              Text(widget.data,
-                  style: GoogleFonts.manrope(
-                    textStyle: TextStyle(color: textColor, fontSize: 20),
-                  ))
-            ],
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Text(widget.data,
+                //     style: GoogleFonts.manrope(
+                //       textStyle: TextStyle(color: textColor, fontSize: 20),
+                //     )),
+                Text(sentence,
+                    style: GoogleFonts.manrope(
+                      textStyle: TextStyle(color: textColor, fontSize: 25),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text('Here are some songs for you, just for your mood',
+                      style: GoogleFonts.manrope(
+                        textStyle: TextStyle(color: textColor, fontSize: 17),
+                      )),
+                )
+              ],
+            ),
           );
         }),
       ),
