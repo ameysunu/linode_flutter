@@ -9,7 +9,7 @@ Future<Map<String, dynamic>> getValue() async {
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    print(json.decode(response.body));
+    //print(json.decode(response.body));
     var responseBody = json.decode(response.body);
     return responseBody;
   } else {
@@ -20,4 +20,72 @@ Future<Map<String, dynamic>> getValue() async {
 String getScanCode(Map<String, dynamic> responseBody) {
   var jsonURI = responseBody['uri'];
   return 'https://scannables.scdn.co/uri/plain/jpeg/ffffff/black/640/$jsonURI';
+}
+
+Future<Map<String, dynamic>> getSongList() async {
+  var url =
+      'https://europe-west1-randommusicgenerator-34646.cloudfunctions.net/app/getRandomTrack?q=sad&market=US&decade=all&tag_new=false&exclude_singles=false';
+  final response = await http.get(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    //print(json.decode(response.body));
+    var responseBody = json.decode(response.body);
+    return responseBody;
+  } else {
+    throw Exception('e');
+  }
+}
+
+// void fetchTracks(String emotion) async {
+//   var response = await http.get(
+//       Uri.parse(
+//           "https://api.spotify.com/v1/search?q=$emotion&type=track&limit=10"),
+//       headers: {
+//         "Authorization":
+//             "BQB_0VclEL6FjyiT8fdW8k38apMyyHKhJUM6JR88tq8tL1SPSnsmBOCAZiX_6njrRuHkpdnT_fQoXrPuDG7dKuF8rBWkTM7FOn-MYfnNXnMsK-mqJAGpE13T06VPsJLsq4Z5rMFlIjsTETCnEqff4DkNEBzmX0sFDVEF4_CYsTMrvhYCoLdYEgWMqZdy3OdM"
+//       });
+
+//   var data = json.decode(response.body);
+//   // setState(() {
+//   //   tracks = data["tracks"]["items"];
+//   // });
+//   print(data["tracks"]["items"]);
+// }
+
+// Future<Map<String, dynamic>> fetchTracks(String emotion) async {
+//   var url =
+//       'https://api.spotify.com/v1/search?q=$emotion&type=track&limit=10&market=US';
+//   final response = await http.get(Uri.parse(url), headers: {
+//     'Authorization':
+//         'Bearer BQDmEmFQ35FFrDElvw2Vun8tZQzW4Nqu-q9c9bLe8pgg0__SHvOIb1U-TAw47FASO-QBoM4pZ4YtRgoRDJR3j1K60k5zr41jw5KXnBPAmkkTH6Y6qnq1rIu4YsIN7GnU3PrBdDMtWTovt7g0lFZyTsklsUOrZT6m1PhXY8sYtM_JHx0H2qEdRnKCttbZ41ZX'
+//   });
+
+//   if (response.statusCode == 200) {
+//     print(json.decode(response.body));
+//     var responseBody = json.decode(response.body);
+//     return responseBody["tracks"]["items"];
+//   } else {
+//     throw Exception('e');
+//   }
+// }
+
+Future<List> fetchTracks(String emotion) async {
+  var url =
+      'https://api.spotify.com/v1/search?q=$emotion&type=track&limit=10&market=US';
+  final response = await http.get(Uri.parse(url), headers: {
+    'Authorization':
+        'Bearer BQDpXurEsCzEADDG3RqZNeAvZcqqxqUxQHZTIavkM758BaNrLlc-t6N1rgzoO06k7t-5i9XSU644y6wjdxlGPBc6xRN7AS_6YBEjnoRF31IIv-l2DnQqWW3HRy5fnu-pwAXYdxhLisiVWQrlAHTsX_X6aJ0nhDPYAUtLGzqZGjNH9G1zK9rdn0VXMvXuhoEL'
+  });
+
+  if (response.statusCode == 200) {
+    var responseBody = json.decode(response.body);
+    List tracks = [];
+    for (var track in responseBody["tracks"]["items"]) {
+      //print(track['name']);
+      tracks.add(track);
+    }
+    return tracks;
+  } else {
+    throw Exception('Failed to load tracks');
+  }
 }

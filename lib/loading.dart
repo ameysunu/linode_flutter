@@ -3,9 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:linode_flutter/spotify_list.dart';
 import 'package:rive/rive.dart';
 
 import 'controllers/generator.dart';
+import 'controllers/spotify.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key, required this.response});
@@ -113,12 +115,19 @@ class ResultWidget extends StatefulWidget {
 
 class _ResultWidgetState extends State<ResultWidget> {
   var sentence;
+  late Future<List<dynamic>> responseFuture;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     sentence = generatorSentence(widget.data);
+    // fetchTracks(widget.data).then((tracks) {
+    //   setState(() {
+    //     list_tracks = tracks;
+    //   });
+    // });
+    responseFuture = fetchTracks(widget.data);
   }
 
   @override
@@ -157,6 +166,23 @@ class _ResultWidgetState extends State<ResultWidget> {
                       style: GoogleFonts.manrope(
                         textStyle: TextStyle(color: textColor, fontSize: 17),
                       )),
+                ),
+                // SingleChildScrollView(
+                //   child: list_tracks != null
+                //       ? SpotifyWidget(tracks: list_tracks)
+                //       : Container(),
+                // ),
+                FutureBuilder(
+                  future: responseFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SpotifyWidget(tracks: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Text("Error loading image");
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
                 )
               ],
             ),
