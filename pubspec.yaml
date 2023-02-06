@@ -47,6 +47,7 @@ dependencies:
   path:
   image_picker: 
   rive: ^0.10.1
+  just_audio: ^0.9.31
 
 dev_dependencies:
   flutter_test:

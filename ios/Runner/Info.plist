@@ -57,6 +57,15 @@
   	<string>Upload image from camera for screen background</string>
   	<key>NSMicrophoneUsageDescription</key>
   	<string>Post videos to profile</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 
 </dict>
 </plist>

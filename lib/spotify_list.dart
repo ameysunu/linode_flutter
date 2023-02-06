@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SpotifyWidget extends StatefulWidget {
@@ -20,9 +21,14 @@ class _SpotifyWidgetState extends State<SpotifyWidget> {
     print(widget.tracks);
   }
 
+  bool _isPlaying = false;
+
   @override
   Widget build(BuildContext context) {
     const textColor = const Color(0xFFB392E4F);
+    var playText = 'Play Preview with Spotify';
+    bool _isPaused = false;
+
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -82,6 +88,36 @@ class _SpotifyWidgetState extends State<SpotifyWidget> {
                               style: GoogleFonts.manrope(
                                   textStyle: TextStyle(color: textColor),
                                   fontSize: 15),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  final player = AudioPlayer();
+                                  await player.setUrl(item['preview_url']);
+                                  setState(() {
+                                    _isPaused = !_isPaused;
+                                  });
+                                  if (_isPaused) {
+                                    player.play();
+                                    setState(() {
+                                      playText = 'Pause';
+                                    });
+                                  } else {
+                                    player.pause();
+                                    setState(() {
+                                      playText = 'Play Preview with Spotify';
+                                    });
+                                  }
+                                },
+                                child: Text(
+                                  playText,
+                                  softWrap: true,
+                                  style: GoogleFonts.manrope(
+                                      textStyle: TextStyle(color: textColor),
+                                      fontSize: 15),
+                                ),
+                              ),
                             ),
                           ],
                         ),
