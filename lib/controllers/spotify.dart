@@ -74,7 +74,7 @@ Future<List> fetchTracks(String emotion) async {
       'https://api.spotify.com/v1/search?q=$emotion&type=track&limit=10&market=US';
   final response = await http.get(Uri.parse(url), headers: {
     'Authorization':
-        'Bearer BQC7s6eGy2j_s9Qc2msRySOeU97iMwAZnsWLks1yiNGYVxkPmiB6VY5PWTDxMx-bkJd2Kk4Ej1Borr4zmJJnF4r9tiDOWc3OdoXlrzZ9dMkQDDdRoagvLsg7QieS7woqTqGApWhYlK7KhPkuFTAI5T40xvotdhqhogw0Ib_HF22OQH68ZV23EQm7piyJNwCQ'
+        'Bearer BQC6fvLlLC4-rejnPw0zN677YGnySy1FzX4ScUsyUkuCht811p-vtJ52EcdsTZ6oAnCJJ39s7wGJFVI0kfjMA-OWGbTvkcjIh_1DO8bvNWklafSDI4sWkEiWeJcajdwmFw3leQ21xytyUoQIT5S4o8dHvdWuCfizKr6QG6mLo5pUoqjkFcAAy9uxOr8nsZ0_'
   });
 
   if (response.statusCode == 200) {
