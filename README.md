@@ -51,6 +51,14 @@ curl -X POST -F "image=@//Users/ameysunu/Downloads/5d9f3f5183486904582ee506.png"
 
 ```
 
+## Updated API fetch
+
+Instead of using `ngrok`, the web server has been hosted using `nginx` and `gunicorn3`. 
+
+```
+The POST url can be updated : 109.74.199.203/upload
+```
+
 
 
 ## Getting Spotify Token
