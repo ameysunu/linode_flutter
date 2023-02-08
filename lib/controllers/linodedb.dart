@@ -46,8 +46,6 @@ uploadImage(String path) async {
   //   print("Failed to retrieve data from the server.");
   // }
 
-  var jsonMap;
-
   try {
     var url = Uri.parse("$NGROK_URL/upload");
 
@@ -59,19 +57,19 @@ uploadImage(String path) async {
 
     final responseData = await response.stream.toBytes();
     final responseString = String.fromCharCodes(responseData);
-    jsonMap = jsonDecode(responseString);
+    var jsonMap = jsonDecode(responseString);
+    Map<String, dynamic> parsedJson = jsonDecode(jsonMap);
+    String topEmotion = parsedJson['top_emotion'];
+
+    if (topEmotion != null) {
+      print(topEmotion);
+
+      return topEmotion;
+    } else {
+      print("No face found, please try again.");
+      return 'No face found, please try again.';
+    }
   } catch (e) {
     print(e.toString());
-  }
-
-  if (jsonMap['top_emotion'] != null) {
-    String topEmotion = jsonMap['top_emotion'];
-
-    print(topEmotion);
-
-    return topEmotion;
-  } else {
-    print("No face found, please try again.");
-    return 'No face found, please try again.';
   }
 }
