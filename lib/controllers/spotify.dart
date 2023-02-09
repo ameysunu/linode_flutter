@@ -72,10 +72,8 @@ Future<Map<String, dynamic>> getSongList() async {
 Future<List> fetchTracks(String emotion) async {
   var url =
       'https://api.spotify.com/v1/search?q=$emotion&type=track&limit=10&market=US';
-  final response = await http.get(Uri.parse(url), headers: {
-    'Authorization':
-        'Bearer BQC6fvLlLC4-rejnPw0zN677YGnySy1FzX4ScUsyUkuCht811p-vtJ52EcdsTZ6oAnCJJ39s7wGJFVI0kfjMA-OWGbTvkcjIh_1DO8bvNWklafSDI4sWkEiWeJcajdwmFw3leQ21xytyUoQIT5S4o8dHvdWuCfizKr6QG6mLo5pUoqjkFcAAy9uxOr8nsZ0_'
-  });
+  final response = await http
+      .get(Uri.parse(url), headers: {'Authorization': 'Bearer $SPOTIFY_API'});
 
   if (response.statusCode == 200) {
     var responseBody = json.decode(response.body);
