@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:linode_flutter/controllers/linodedb.dart';
 import 'package:linode_flutter/spotify_list.dart';
 import 'package:rive/rive.dart';
 
@@ -128,6 +130,7 @@ class _ResultWidgetState extends State<ResultWidget> {
     //   });
     // });
     responseFuture = fetchTracks(widget.data);
+    print(FirebaseAuth.instance.currentUser?.uid);
   }
 
   @override
@@ -195,7 +198,12 @@ class _ResultWidgetState extends State<ResultWidget> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: textColor,
-          onPressed: null,
+          onPressed: () async {
+            List<dynamic> data = await responseFuture;
+            String dataString = data.join(', ');
+            connectToDB(FirebaseAuth.instance.currentUser?.uid, dataString,
+                DateTime.now().toString().substring(0, 10), widget.data);
+          },
           icon: Icon(Icons.music_note),
           label: Text('Save this playlist?', style: GoogleFonts.manrope()),
         ));

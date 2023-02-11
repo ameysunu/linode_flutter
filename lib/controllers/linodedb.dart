@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:http/http.dart' as http;
 
-connectToDB() async {
+connectToDB(uid, songData, currentDate, mood) async {
   // Linode credentials saved in secrets.dart file
   final conn = await MySQLConnection.createConnection(
       host: LINODE_DB_HOST,
@@ -16,9 +16,21 @@ connectToDB() async {
   await conn.connect();
 
   await conn.execute("USE dev");
-  var result = await conn.execute("SELECT * FROM users");
-  for (final row in result.rows) {
-    print(row.assoc());
+  // var result = await conn.execute("SELECT * FROM userdata");
+  // for (final row in result.rows) {
+  //   print(row.assoc());
+  // }
+  addDatatoDB(conn, uid, songData, currentDate, mood);
+}
+
+addDatatoDB(conn, uid, songData, currentDate, mood) async {
+  await conn.execute("USE dev");
+  try {
+    var data = await conn.execute(
+        "INSERT INTO userdata (userid, songdata, date, mood) VALUES ('$uid', '$songData', '$currentDate', '$mood')");
+    print(data);
+  } catch (e) {
+    print(e);
   }
 }
 
