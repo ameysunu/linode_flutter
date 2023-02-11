@@ -85,3 +85,28 @@ uploadImage(String path) async {
     print(e.toString());
   }
 }
+
+Future<List<dynamic>> getDataFromDB(uid) async {
+  final conn = await MySQLConnection.createConnection(
+      host: LINODE_DB_HOST,
+      port: 3306,
+      userName: LINODE_DB_USERNAME,
+      password: LINODE_DB_PASSWORD,
+      secure: true);
+  await conn.connect();
+
+  await conn.execute("USE dev");
+
+  try {
+    var data =
+        await conn.execute("SELECT * FROM userdata WHERE userid = '$uid'");
+    List<dynamic> rows = [];
+    for (final row in data.rows) {
+      rows.add(row.assoc());
+    }
+    return rows;
+  } catch (e) {
+    print(e);
+    return [];
+  }
+}

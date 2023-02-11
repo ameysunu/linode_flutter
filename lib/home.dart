@@ -11,6 +11,8 @@ import 'package:linode_flutter/mood.dart';
 import 'package:linode_flutter/nocamera.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'mydata.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -126,37 +128,46 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: bckColor,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Things I did',
-                                style: GoogleFonts.manrope(
-                                    textStyle: TextStyle(
-                                        fontSize: 20, color: Colors.white)),
-                              ),
-                              Text(
-                                "All my previous mood swings!",
-                                style: GoogleFonts.manrope(
-                                    textStyle: TextStyle(color: Colors.white)),
-                              )
-                            ],
-                          ),
-                          Icon(
-                            Icons.security,
-                            color: Colors.white,
-                          )
-                        ],
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyData()),
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: bckColor,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Things I did',
+                                  style: GoogleFonts.manrope(
+                                      textStyle: TextStyle(
+                                          fontSize: 20, color: Colors.white)),
+                                ),
+                                Text(
+                                  "All my previous mood swings!",
+                                  style: GoogleFonts.manrope(
+                                      textStyle:
+                                          TextStyle(color: Colors.white)),
+                                )
+                              ],
+                            ),
+                            Icon(
+                              Icons.security,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
