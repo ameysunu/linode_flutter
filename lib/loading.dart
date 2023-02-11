@@ -134,64 +134,70 @@ class _ResultWidgetState extends State<ResultWidget> {
   Widget build(BuildContext context) {
     const textColor = const Color(0xFFB392E4F);
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Builder(builder: (context) {
-          if (widget.data == 'No face found, please try again.') {
-            return Container(
-              child: Center(
-                child: Text(widget.data,
-                    style: GoogleFonts.manrope(
-                      textStyle: TextStyle(color: textColor, fontSize: 20),
-                    )),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Builder(builder: (context) {
+            if (widget.data == 'No face found, please try again.') {
+              return Container(
+                child: Center(
+                  child: Text(widget.data,
+                      style: GoogleFonts.manrope(
+                        textStyle: TextStyle(color: textColor, fontSize: 20),
+                      )),
+                ),
+              );
+            }
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Text(widget.data,
+                    //     style: GoogleFonts.manrope(
+                    //       textStyle: TextStyle(color: textColor, fontSize: 20),
+                    //     )),
+                    Text(sentence,
+                        style: GoogleFonts.manrope(
+                          textStyle: TextStyle(color: textColor, fontSize: 25),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Text(
+                          'Here are some songs for you, just for your mood',
+                          style: GoogleFonts.manrope(
+                            textStyle:
+                                TextStyle(color: textColor, fontSize: 17),
+                          )),
+                    ),
+                    // SingleChildScrollView(
+                    //   child: list_tracks != null
+                    //       ? SpotifyWidget(tracks: list_tracks)
+                    //       : Container(),
+                    // ),
+                    FutureBuilder(
+                      future: responseFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return SpotifyWidget(tracks: snapshot.data!);
+                        } else if (snapshot.hasError) {
+                          return Text("Error loading image");
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             );
-          }
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Text(widget.data,
-                  //     style: GoogleFonts.manrope(
-                  //       textStyle: TextStyle(color: textColor, fontSize: 20),
-                  //     )),
-                  Text(sentence,
-                      style: GoogleFonts.manrope(
-                        textStyle: TextStyle(color: textColor, fontSize: 25),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                        'Here are some songs for you, just for your mood',
-                        style: GoogleFonts.manrope(
-                          textStyle: TextStyle(color: textColor, fontSize: 17),
-                        )),
-                  ),
-                  // SingleChildScrollView(
-                  //   child: list_tracks != null
-                  //       ? SpotifyWidget(tracks: list_tracks)
-                  //       : Container(),
-                  // ),
-                  FutureBuilder(
-                    future: responseFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return SpotifyWidget(tracks: snapshot.data!);
-                      } else if (snapshot.hasError) {
-                        return Text("Error loading image");
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  )
-                ],
-              ),
-            ),
-          );
-        }),
-      ),
-    );
+          }),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: textColor,
+          onPressed: null,
+          icon: Icon(Icons.music_note),
+          label: Text('Save this playlist?', style: GoogleFonts.manrope()),
+        ));
   }
 }
