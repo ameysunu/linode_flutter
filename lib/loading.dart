@@ -118,6 +118,7 @@ class ResultWidget extends StatefulWidget {
 class _ResultWidgetState extends State<ResultWidget> {
   var sentence;
   late Future<List<dynamic>> responseFuture;
+  var _fabUpdated = true;
 
   @override
   void initState() {
@@ -196,16 +197,29 @@ class _ResultWidgetState extends State<ResultWidget> {
             );
           }),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: textColor,
-          onPressed: () async {
-            List<dynamic> data = await responseFuture;
-            String dataString = data.join(', ');
-            connectToDB(FirebaseAuth.instance.currentUser?.uid, dataString,
-                DateTime.now().toString().substring(0, 10), widget.data);
-          },
-          icon: Icon(Icons.music_note),
-          label: Text('Save this playlist?', style: GoogleFonts.manrope()),
-        ));
+        floatingActionButton: _fabUpdated
+            ? FloatingActionButton.extended(
+                backgroundColor: textColor,
+                onPressed: () async {
+                  List<dynamic> data = await responseFuture;
+                  String dataString = data.join(', ');
+                  connectToDB(
+                      FirebaseAuth.instance.currentUser?.uid,
+                      dataString,
+                      DateTime.now().toString().substring(0, 10),
+                      widget.data);
+                  setState(() {
+                    _fabUpdated = false;
+                  });
+                },
+                icon: Icon(Icons.music_note),
+                label:
+                    Text('Save this playlist?', style: GoogleFonts.manrope()),
+              )
+            : FloatingActionButton(
+                backgroundColor: Colors.green,
+                onPressed: null,
+                child: Icon(Icons.check),
+              ));
   }
 }
