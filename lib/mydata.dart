@@ -52,7 +52,58 @@ class _MyDataState extends State<MyData> {
                   if (snapshot.hasData) {
                     return Column(
                       children: snapshot.data!.map((data) {
-                        return Text(data['mood'].toString());
+                        return Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Text(
+                                      data['mood']
+                                              .toString()
+                                              .substring(0, 1)
+                                              .toUpperCase() +
+                                          data['mood'].toString().substring(1),
+                                      style: GoogleFonts.manrope(
+                                          textStyle: TextStyle(
+                                              color: textColor, fontSize: 20))),
+                                ),
+                                Text(data['date'].toString(),
+                                    style: GoogleFonts.manrope(
+                                        textStyle: TextStyle(
+                                            color: textColor, fontSize: 20)))
+                              ],
+                            ),
+                            Spacer(),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DataWidget(
+                                        date: data['date'].toString(),
+                                        mood: data['mood']
+                                                .toString()
+                                                .substring(0, 1)
+                                                .toUpperCase() +
+                                            data['mood']
+                                                .toString()
+                                                .substring(1),
+                                        songs: data['songs'],
+                                        images: data['images'],
+                                        urls: data['url'],
+                                        artists: data['artists'],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: textColor,
+                                ))
+                          ],
+                        );
                       }).toList(),
                     );
                   } else if (snapshot.hasError) {
@@ -67,5 +118,53 @@ class _MyDataState extends State<MyData> {
         ),
       ),
     );
+  }
+}
+
+class DataWidget extends StatefulWidget {
+  final String date;
+  final String mood;
+  final String songs;
+  final String images;
+  final String urls;
+  final String artists;
+
+  const DataWidget(
+      {super.key,
+      required this.date,
+      required this.mood,
+      required this.songs,
+      required this.images,
+      required this.urls,
+      required this.artists});
+
+  @override
+  State<DataWidget> createState() => _DataWidgetState();
+}
+
+class _DataWidgetState extends State<DataWidget> {
+  @override
+  late List<String> songList;
+  initState() {
+    String songs = widget.songs;
+    songList = songs.split(', ');
+    print(songList);
+  }
+
+  Widget build(BuildContext context) {
+    const textColor = const Color(0xFFB392E4F);
+
+    return Scaffold(
+        appBar: AppBar(
+      title: Text(
+        '${widget.mood} songs from ${widget.date}',
+        style: GoogleFonts.manrope(textStyle: TextStyle(color: textColor)),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: BackButton(
+        color: textColor,
+      ),
+    ));
   }
 }
