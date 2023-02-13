@@ -5,29 +5,61 @@ import 'package:sqflite/sqflite.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:http/http.dart' as http;
 
-connectToDB(uid, songData, currentDate, mood) async {
-  // Linode credentials saved in secrets.dart file
-  final conn = await MySQLConnection.createConnection(
+late MySQLConnection conn;
+
+initializeDB() async {
+  conn = await MySQLConnection.createConnection(
       host: LINODE_DB_HOST,
       port: 3306,
       userName: LINODE_DB_USERNAME,
       password: LINODE_DB_PASSWORD,
       secure: true);
   await conn.connect();
-
   await conn.execute("USE dev");
-  // var result = await conn.execute("SELECT * FROM userdata");
-  // for (final row in result.rows) {
-  //   print(row.assoc());
-  // }
-  addDatatoDB(conn, uid, songData, currentDate, mood);
 }
 
-addDatatoDB(conn, uid, songData, currentDate, mood) async {
+// connectToDB(uid, songData, currentDate, mood) async {
+//   // Linode credentials saved in secrets.dart file
+//   // final conn = await MySQLConnection.createConnection(
+//   //     host: LINODE_DB_HOST,
+//   //     port: 3306,
+//   //     userName: LINODE_DB_USERNAME,
+//   //     password: LINODE_DB_PASSWORD,
+//   //     secure: true);
+//   await conn.connect();
+
+//   await conn.execute("USE dev");
+//   // var result = await conn.execute("SELECT * FROM userdata");
+//   // for (final row in result.rows) {
+//   //   print(row.assoc());
+//   // }
+// }
+
+addDatatoDB(uid, currentDate, mood) async {
+  // ignore: unnecessary_null_comparison
+  if (conn == null) {
+    await initializeDB();
+  }
   await conn.execute("USE dev");
   try {
     var data = await conn.execute(
-        "INSERT INTO userdata (userid, songdata, date, mood) VALUES ('$uid', '$songData', '$currentDate', '$mood')");
+        "INSERT INTO userdata (userid, date, mood) VALUES ('$uid', '$currentDate', '$mood')");
+    print(data);
+  } catch (e) {
+    print(e);
+  }
+}
+
+addSongtoDB(userid, name, img, artist, url, mood) async {
+  // ignore: unnecessary_null_comparison
+  if (conn == null) {
+    await initializeDB();
+  }
+
+  await conn.execute("USE dev");
+  try {
+    var data = await conn.execute(
+        "INSERT INTO songdata (userid, name, img, artist, url, mood) VALUES ('$userid', '$name', '$img', '$artist', '$url', '$mood')");
     print(data);
   } catch (e) {
     print(e);

@@ -132,6 +132,7 @@ class _ResultWidgetState extends State<ResultWidget> {
     // });
     responseFuture = fetchTracks(widget.data);
     print(FirebaseAuth.instance.currentUser?.uid);
+    initializeDB();
   }
 
   @override
@@ -203,13 +204,20 @@ class _ResultWidgetState extends State<ResultWidget> {
                 onPressed: () async {
                   List<dynamic> data = await responseFuture;
                   String dataString = data.join(', ');
-                  connectToDB(
-                      FirebaseAuth.instance.currentUser?.uid,
-                      dataString,
-                      DateTime.now().toString().substring(0, 10),
-                      widget.data);
+                  addDatatoDB(FirebaseAuth.instance.currentUser?.uid,
+                      DateTime.now().toString().substring(0, 10), widget.data);
                   setState(() {
                     _fabUpdated = false;
+                  });
+                  data.forEach((item) {
+                    //addSongtoDB(userid, name, img, artist, url)
+                    addSongtoDB(
+                        FirebaseAuth.instance.currentUser?.uid,
+                        item['name'],
+                        item['album']['images'][0]['url'],
+                        item['artists'][0]['name'],
+                        item['external_urls']['spotify'],
+                        widget.data);
                   });
                 },
                 icon: Icon(Icons.music_note),
