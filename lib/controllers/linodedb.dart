@@ -18,23 +18,6 @@ initializeDB() async {
   await conn.execute("USE dev");
 }
 
-// connectToDB(uid, songData, currentDate, mood) async {
-//   // Linode credentials saved in secrets.dart file
-//   // final conn = await MySQLConnection.createConnection(
-//   //     host: LINODE_DB_HOST,
-//   //     port: 3306,
-//   //     userName: LINODE_DB_USERNAME,
-//   //     password: LINODE_DB_PASSWORD,
-//   //     secure: true);
-//   await conn.connect();
-
-//   await conn.execute("USE dev");
-//   // var result = await conn.execute("SELECT * FROM userdata");
-//   // for (final row in result.rows) {
-//   //   print(row.assoc());
-//   // }
-// }
-
 addDatatoDB(uid, currentDate, mood) async {
   // ignore: unnecessary_null_comparison
   if (conn == null) {
@@ -50,7 +33,7 @@ addDatatoDB(uid, currentDate, mood) async {
   }
 }
 
-addSongtoDB(userid, name, img, artist, url, mood) async {
+addSongtoDB(userid, name, img, artist, url, date) async {
   // ignore: unnecessary_null_comparison
   if (conn == null) {
     await initializeDB();
@@ -59,7 +42,7 @@ addSongtoDB(userid, name, img, artist, url, mood) async {
   await conn.execute("USE dev");
   try {
     var data = await conn.execute(
-        "INSERT INTO songdata (userid, name, img, artist, url, mood) VALUES ('$userid', '$name', '$img', '$artist', '$url', '$mood')");
+        "INSERT INTO songdata (userid, name, img, artist, url, date) VALUES ('$userid', '$name', '$img', '$artist', '$url', '$date')");
     print(data);
   } catch (e) {
     print(e);
@@ -130,8 +113,8 @@ Future<List<dynamic>> getDataFromDB(uid) async {
   await conn.execute("USE dev");
 
   try {
-    var data =
-        await conn.execute("SELECT * FROM userdata WHERE userid = '$uid'");
+    var data = await conn.execute(
+        "SELECT userdata.*, COUNT(songdata.userid) AS total_songs, GROUP_CONCAT(songdata.name SEPARATOR ', ') AS songs, GROUP_CONCAT(songdata.img SEPARATOR ', ') AS images, GROUP_CONCAT(songdata.url SEPARATOR ', ') AS url, GROUP_CONCAT(songdata.artist SEPARATOR ', ') AS artists FROM userdata JOIN songdata ON userdata.userid = songdata.userid WHERE userdata.userid = '$uid' GROUP BY userdata.userid, userdata.id;");
     List<dynamic> rows = [];
     for (final row in data.rows) {
       rows.add(row.assoc());

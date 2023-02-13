@@ -217,7 +217,7 @@ class _ResultWidgetState extends State<ResultWidget> {
                         item['album']['images'][0]['url'],
                         item['artists'][0]['name'],
                         item['external_urls']['spotify'],
-                        widget.data);
+                        DateTime.now().toString().substring(0, 10));
                   });
                 },
                 icon: Icon(Icons.music_note),
