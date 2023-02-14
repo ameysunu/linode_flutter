@@ -54,3 +54,10 @@ String generatorSentence(String textValue) {
 
   return template;
 }
+
+String generateInsertionKey() {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  final random = Random.secure();
+  return List.generate(10, (index) => chars[random.nextInt(chars.length)])
+      .join();
+}

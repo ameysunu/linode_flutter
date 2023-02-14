@@ -204,8 +204,12 @@ class _ResultWidgetState extends State<ResultWidget> {
                 onPressed: () async {
                   List<dynamic> data = await responseFuture;
                   String dataString = data.join(', ');
-                  addDatatoDB(FirebaseAuth.instance.currentUser?.uid,
-                      DateTime.now().toString().substring(0, 10), widget.data);
+                  var insertionKey = generateInsertionKey();
+                  addDatatoDB(
+                      FirebaseAuth.instance.currentUser?.uid,
+                      DateTime.now().toString().substring(0, 10),
+                      widget.data,
+                      insertionKey);
                   setState(() {
                     _fabUpdated = false;
                   });
@@ -217,7 +221,8 @@ class _ResultWidgetState extends State<ResultWidget> {
                         item['album']['images'][0]['url'],
                         item['artists'][0]['name'],
                         item['external_urls']['spotify'],
-                        DateTime.now().toString().substring(0, 10));
+                        DateTime.now().toString().substring(0, 10),
+                        insertionKey);
                   });
                 },
                 icon: Icon(Icons.music_note),
