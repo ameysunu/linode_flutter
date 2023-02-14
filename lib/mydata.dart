@@ -156,7 +156,6 @@ class _DataWidgetState extends State<DataWidget> {
   @override
   void initState() {
     super.initState();
-    //responseFuture = getDataFromDB(FirebaseAuth.instance.currentUser?.uid);
     responseFuture = getSongListFromDB(
         FirebaseAuth.instance.currentUser?.uid, widget.insertionKey);
   }
@@ -272,54 +271,3 @@ class _DataWidgetState extends State<DataWidget> {
     );
   }
 }
-
-// class DataWidget extends StatefulWidget {
-//   final String date;
-//   final String mood;
-//   final String songs;
-//   final String images;
-//   final String urls;
-//   final String artists;
-
-//   const DataWidget(
-//       {super.key,
-//       required this.date,
-//       required this.mood,
-//       required this.songs,
-//       required this.images,
-//       required this.urls,
-//       required this.artists});
-
-//   @override
-//   State<DataWidget> createState() => _DataWidgetState();
-// }
-
-// class _DataWidgetState extends State<DataWidget> {
-//   @override
-//   late List<String> songList;
-//   initState() {
-//     String songs = widget.songs;
-//     songList = songs.split(', ');
-//     print(songList);
-//   }
-
-//   Widget build(BuildContext context) {
-//     const textColor = const Color(0xFFB392E4F);
-
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text(
-//             '${widget.mood} songs from ${widget.date}',
-//             style: GoogleFonts.manrope(textStyle: TextStyle(color: textColor)),
-//           ),
-//           backgroundColor: Colors.white,
-//           elevation: 0,
-//           leading: BackButton(
-//             color: textColor,
-//           ),
-//         ),
-//         body: ListView(
-//           children: songList.map((item) => Text(item)).toList(),
-//         ));
-//   }
-// }
