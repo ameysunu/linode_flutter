@@ -68,3 +68,8 @@ The POST url can be updated : 109.74.199.203/upload
 * Open `app.js` and add the needed tokens, redirect url: `/callback`.
 
 * Run node `app.js` and login to retrieve the App Token
+
+
+## Spotify API Retrieval
+
+Spotify token keeps expiring every 60 mins, and hence to fix this, a env variable was created on the Linode Server, from where the Spotify token can be fetched. 
