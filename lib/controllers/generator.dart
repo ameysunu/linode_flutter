@@ -61,3 +61,46 @@ String generateInsertionKey() {
   return List.generate(10, (index) => chars[random.nextInt(chars.length)])
       .join();
 }
+
+String emotionWord(String textValue) {
+  // Keyword and its corresponding sentence templates
+
+  if (textValue == "No face found, please try again.") {
+    return textValue;
+  }
+  Map<String, List<String>> keywordsTemplates = {
+    "happy": [
+      "zedd",
+      "martin garrix",
+      "pheobe ryan",
+      "becky hill",
+      "little mix"
+    ],
+    "sad": [
+      "taylor swift",
+      "bebe rexha",
+      "rihanna",
+      "jason derulo",
+      "bastille"
+    ],
+    "angry": ["guns n roses", "ac dc", "calm", "beaches", "angry"],
+    "surprised": [
+      "rita ora",
+      "david guetta",
+      "surprised",
+      "drake",
+      "travis scott"
+    ],
+    "neutral": ["calvin harris", "alesso", "daya", "grl", "pitbull"]
+  };
+
+  // Input keyword
+  String keyword = textValue.toLowerCase();
+
+  // Select a random sentence template based on the keyword
+  var random = Random();
+  int index = random.nextInt(keywordsTemplates[keyword]!.length);
+  String template = keywordsTemplates[keyword]![index];
+
+  return template;
+}

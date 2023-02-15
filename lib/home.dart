@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linode_flutter/controllers/firebase_auth.dart';
+import 'package:linode_flutter/controllers/secrets.dart';
 import 'package:linode_flutter/controllers/spotify.dart';
 import 'package:linode_flutter/mood.dart';
 import 'package:linode_flutter/nocamera.dart';
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                       onTap: () async {
                         WidgetsFlutterBinding.ensureInitialized();
                         final cameras = await availableCameras();
+                        SPOTIFY_API = await getSpotifyApiKey();
 
                         if (cameras.isNotEmpty) {
                           final frontCamera =

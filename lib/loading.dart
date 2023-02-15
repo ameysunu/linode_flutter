@@ -117,6 +117,7 @@ class ResultWidget extends StatefulWidget {
 
 class _ResultWidgetState extends State<ResultWidget> {
   var sentence;
+  var emotion;
   late Future<List<dynamic>> responseFuture;
   var _fabUpdated = true;
 
@@ -130,7 +131,8 @@ class _ResultWidgetState extends State<ResultWidget> {
     //     list_tracks = tracks;
     //   });
     // });
-    responseFuture = fetchTracks(widget.data);
+    emotion = emotionWord(widget.data);
+    responseFuture = fetchTracks(emotion);
     print(FirebaseAuth.instance.currentUser?.uid);
     initializeDB();
   }
