@@ -87,3 +87,13 @@ Future<List> fetchTracks(String emotion) async {
     throw Exception('Failed to load tracks');
   }
 }
+
+Future<String> getSpotifyApiKey() async {
+  final response = await http.get(Uri.parse(
+      'http://109.74.199.203:6969/api/env_variables/SPOTIFY_API_KEY'));
+
+  Map<String, dynamic> responseMap = jsonDecode(response.body);
+  String apiKey = responseMap['value'];
+  print(apiKey);
+  return apiKey;
+}
