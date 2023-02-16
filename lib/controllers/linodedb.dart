@@ -171,3 +171,21 @@ Future<List<dynamic>> getSongListFromDB(uid, insertionKey) async {
     return [];
   }
 }
+
+deleteRecordFromDB(insertionKey) async {
+  conn = await MySQLConnection.createConnection(
+      host: LINODE_DB_HOST,
+      port: 3306,
+      userName: LINODE_DB_USERNAME,
+      password: LINODE_DB_PASSWORD,
+      secure: true);
+  await conn.connect();
+
+  try {
+    conn.execute("USE dev;");
+    conn.execute("DELETE FROM songdata WHERE insertion_key = '$insertionKey';");
+    conn.execute("DELETE FROM userdata WHERE insertion_key = '$insertionKey';");
+  } catch (e) {
+    print(e);
+  }
+}
