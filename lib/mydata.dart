@@ -79,6 +79,63 @@ class _MyDataState extends State<MyData> {
                             ),
                             Spacer(),
                             IconButton(
+                              onPressed: () async {
+                                print(data['insertion_key']);
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return StatefulBuilder(
+                                      builder: (BuildContext context,
+                                          StateSetter setState) {
+                                        return AlertDialog(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                'Are you sure, you want to delete?',
+                                                style: GoogleFonts.manrope(),
+                                              )
+                                            ],
+                                          ),
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(
+                                                    true); // Return true when delete button is pressed
+                                              },
+                                              child: Text('Delete'),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(
+                                                    false); // Return false when cancel button is pressed
+                                              },
+                                              child: Text('Cancel'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                ).then((value) async {
+                                  if (value != null && value) {
+                                    await deleteRecordFromDB(
+                                        data['insertion_key']);
+                                    setState(() {
+                                      responseFuture = getMoodsFromDB(
+                                          FirebaseAuth
+                                              .instance.currentUser?.uid);
+                                    });
+                                  }
+                                });
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
+                            IconButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -94,24 +151,7 @@ class _MyDataState extends State<MyData> {
                                                   .substring(1),
                                           insertionKey: data['insertion_key'],
                                         ),
-                                      )
-                                      // MaterialPageRoute(
-                                      //   builder: (context) => DataWidget(
-                                      //     date: data['date'].toString(),
-                                      //     mood: data['mood']
-                                      //             .toString()
-                                      //             .substring(0, 1)
-                                      //             .toUpperCase() +
-                                      //         data['mood']
-                                      //             .toString()
-                                      //             .substring(1),
-                                      //     songs: data['songs'],
-                                      //     images: data['images'],
-                                      //     urls: data['url'],
-                                      //     artists: data['artists'],
-                                      //   ),
-                                      // ),
-                                      );
+                                      ));
                                 },
                                 icon: Icon(
                                   Icons.arrow_forward_ios,
