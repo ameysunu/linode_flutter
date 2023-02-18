@@ -25,107 +25,118 @@ class _UserLoginState extends State<UserLogin> {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Login',
-              style: GoogleFonts.manrope(
-                  textStyle:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-            ),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.45,
-                child: SvgPicture.asset("assets/login.svg",
-                    semanticsLabel: 'Acme Logo')),
-            Padding(
-              padding: const EdgeInsets.only(top: 13.0),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
-                  hintText: 'Enter your email',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 13.0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                  hintText: 'Enter your password',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: buttonColor,
-                ),
-                onPressed: () async {
-                  bool success = await loginUsingFirebase(
-                      emailController.text, passwordController.text);
-                  if (success) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        backgroundColor: Colors.red,
-                        content:
-                            Text("An error has occurred while logging you in"),
-                        duration: Duration(seconds: 5)));
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Login',
-                      style: GoogleFonts.manrope(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Row(
+      body: SingleChildScrollView(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Not registered yet?",
-                    style:
-                        GoogleFonts.manrope(textStyle: TextStyle(fontSize: 16)),
+                    'Login',
+                    style: GoogleFonts.manrope(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
                   ),
-                  InkWell(
-                    child: Text(
-                      " Create an Account",
-                      style: GoogleFonts.manrope(
-                          textStyle: TextStyle(
-                              color: buttonColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
+                  Container(
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      child: SvgPicture.asset("assets/login.svg",
+                          semanticsLabel: 'Acme Logo')),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 13.0),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Email',
+                        hintText: 'Enter your email',
+                      ),
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterUser()),
-                      );
-                    },
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 13.0),
+                    child: TextField(
+                      obscureText: true,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        hintText: 'Enter your password',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: buttonColor,
+                      ),
+                      onPressed: () async {
+                        bool success = await loginUsingFirebase(
+                            emailController.text, passwordController.text);
+                        if (success) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                  "An error has occurred while logging you in"),
+                              duration: Duration(seconds: 5)));
+                        }
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Login',
+                            style: GoogleFonts.manrope(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Not registered yet?",
+                          style: GoogleFonts.manrope(
+                              textStyle: TextStyle(fontSize: 16)),
+                        ),
+                        InkWell(
+                          child: Text(
+                            " Create an Account",
+                            style: GoogleFonts.manrope(
+                                textStyle: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const RegisterUser()),
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
-            )
-          ]),
+            ),
+          ),
         ),
       ),
     );
