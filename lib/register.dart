@@ -60,6 +60,7 @@ class _RegisterUserState extends State<RegisterUser> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
+                obscureText: true,
                 controller: passwordController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -71,6 +72,7 @@ class _RegisterUserState extends State<RegisterUser> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: TextField(
+                obscureText: true,
                 controller: confirmedController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -85,11 +87,11 @@ class _RegisterUserState extends State<RegisterUser> {
                 style: ElevatedButton.styleFrom(
                   primary: buttonColor,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (confirmedController.text == passwordController.text) {
-                    registerUsers(
+                    bool success = await registerUsers(
                         emailController.text, passwordController.text);
-                    if (isSuccess) {
+                    if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           backgroundColor: Colors.green,
                           content: Text(
@@ -105,7 +107,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         backgroundColor: Colors.red,
-                        content: Text("Passwords do not match"),
+                        content: Text("The passwords do not match."),
                         duration: Duration(seconds: 5)));
                   }
                 },

@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:linode_flutter/login.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-bool isSuccess = false;
-
-loginUsingFirebase(email, password) async {
+// bool isSuccess = false;
+Future<bool> loginUsingFirebase(email, password) async {
   try {
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
       email: email,
@@ -11,28 +12,33 @@ loginUsingFirebase(email, password) async {
     );
     User? user = userCredential.user;
     print('Logged in successfully with user: $user');
-    isSuccess = true;
+    return true;
   } catch (e) {
     print('Error logging in: $e');
-    isSuccess = false;
+    return false;
   }
 }
 
-registerUsers(email, password) async {
+Future<bool> registerUsers(email, password) async {
   try {
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
     User? user = userCredential.user;
-    print('Created user successfully');
-    isSuccess = true;
+    print('Logged in successfully with user: $user');
+    return true;
   } catch (e) {
     print('Error logging in: $e');
-    isSuccess = false;
+    return false;
   }
 }
 
-logoutFirebase() async {
+Future<void> logoutFirebase(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (context) => UserLogin()),
+    (Route<dynamic> route) => false,
+  );
 }

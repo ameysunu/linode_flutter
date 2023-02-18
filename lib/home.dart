@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           actions: [
             IconButton(
-                onPressed: logoutFirebase,
+                onPressed: () {
+                  logoutFirebase(context);
+                },
                 icon: Icon(
                   Icons.logout,
                   color: bckColor,

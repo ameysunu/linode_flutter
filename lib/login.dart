@@ -69,10 +69,10 @@ class _UserLoginState extends State<UserLogin> {
                 style: ElevatedButton.styleFrom(
                   primary: buttonColor,
                 ),
-                onPressed: () {
-                  loginUsingFirebase(
+                onPressed: () async {
+                  bool success = await loginUsingFirebase(
                       emailController.text, passwordController.text);
-                  if (isSuccess) {
+                  if (success) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const HomePage()),
